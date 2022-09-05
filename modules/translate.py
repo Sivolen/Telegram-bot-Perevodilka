@@ -22,6 +22,7 @@ def converter(file_name: str) -> str:
     m4a_audio.export(
         f"{Path(__file__).parent.parent}\\cache\\{name[0]}.mp3", format="mp3"
     )
+    Path(file_path).unlink()
     return f"{Path(__file__).parent.parent}\\cache\\{name[0]}.mp3"
 
 
@@ -41,6 +42,8 @@ def converter_wav(file_name: str) -> str:
     r = sr.Recognizer()
     with sr.AudioFile(audio_file) as source:
         audio = r.record(source)
+    # Path(file_path).unlink()
+    Path(audio_file).unlink()
     return r.recognize_google(audio, language="ru")
 
 
@@ -78,7 +81,7 @@ def translate(file_name: str) -> str:
     # )
 
     # print(cased)
-
+    Path(file_path).unlink()
     if not os.path.exists(f"{Path(__file__).parent.parent}/recasepunc"):
         return text
     else:
