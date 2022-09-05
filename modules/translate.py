@@ -15,15 +15,15 @@ def converter(file_name: str) -> str:
     :param file_name: str
     :return: str
     """
-    file_path = f"{Path(__file__).parent.parent}\\cache\\{file_name}"
+    file_path = f"{Path(__file__).parent.parent}/cache/{file_name}"
     name = file_name.split(".")
     m4a_audio = AudioSegment.from_file(file_path, format="mp4")
 
     m4a_audio.export(
-        f"{Path(__file__).parent.parent}\\cache\\{name[0]}.mp3", format="mp3"
+        f"{Path(__file__).parent.parent}/cache/{name[0]}.mp3", format="mp3"
     )
     Path(file_path).unlink()
-    return f"{Path(__file__).parent.parent}\\cache\\{name[0]}.mp3"
+    return f"{Path(__file__).parent.parent}/cache/{name[0]}.mp3"
 
 
 def converter_wav(file_name: str) -> str:
@@ -32,13 +32,13 @@ def converter_wav(file_name: str) -> str:
     :param file_name: str
     :return: str
     """
-    file_path = f"{Path(__file__).parent.parent}\\cache\\{file_name}"
+    file_path = f"{Path(__file__).parent.parent}/cache/{file_name}"
     name = file_name.split(".")
     m4a_audio = AudioSegment.from_file(file_path, format="mp4")
     m4a_audio.export(
-        f"{Path(__file__).parent.parent}\\cache\\{name[0]}.wav", format="wav"
+        f"{Path(__file__).parent.parent}/cache/{name[0]}.wav", format="wav"
     )
-    audio_file = f"{Path(__file__).parent.parent}\\cache\\{name[0]}.wav"
+    audio_file = f"{Path(__file__).parent.parent}/cache/{name[0]}.wav"
     r = sr.Recognizer()
     with sr.AudioFile(audio_file) as source:
         audio = r.record(source)
