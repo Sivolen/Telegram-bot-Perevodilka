@@ -1,6 +1,6 @@
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
-from recasepunc.recasepunc import WordpieceTokenizer
+# from recasepunc.recasepunc import WordpieceTokenizer
 
 from modules.translate import translate, converter_wav
 

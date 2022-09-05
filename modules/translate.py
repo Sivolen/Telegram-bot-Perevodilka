@@ -1,6 +1,6 @@
 import ffmpeg
 from vosk import Model, KaldiRecognizer
-from recasepunc.recasepunc import CasePuncPredictor, WordpieceTokenizer
+# from recasepunc.recasepunc import CasePuncPredictor, WordpieceTokenizer
 import ffmpeg
 from pydub import AudioSegment
 import json
@@ -49,13 +49,9 @@ def translate(file_name: str) -> str:
     :param file_name: str
     :return: str
     """
-
-    if not os.path.exists(f"{Path(__file__).parent.parent}/model"):
-        print(
-            "Please download the model from https://alphacephei.com/vosk/models "
-            "and unpack as 'model' in the current folder."
-        )
-        exit(1)
+    if not os.path.exists(f"{Path(__file__).parent.parent}/model-small"):
+        return "Please download the model from https://alphacephei.com/vosk/models " \
+               "and unpack as 'model' in the current folder."
 
     file_path = converter(file_name=file_name)
     frame_rate = 16000
