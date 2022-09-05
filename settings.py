@@ -1,1 +1,2 @@
-TM_TOKEN = "5746475856:AAEF0z4pnjRHh4W906DSzie8KnW-QODX8zM"
+from os import getenv
+TM_TOKEN = getenv("TM_TOKEN")
