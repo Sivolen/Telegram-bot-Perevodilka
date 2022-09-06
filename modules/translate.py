@@ -1,7 +1,5 @@
-import ffmpeg
 from vosk import Model, KaldiRecognizer
 # from recasepunc.recasepunc import CasePuncPredictor, WordpieceTokenizer
-import ffmpeg
 from pydub import AudioSegment
 import json
 import os
@@ -9,45 +7,48 @@ from pathlib import Path
 import speech_recognition as sr
 
 
-def converter(file_name: str) -> str:
+def check_file_format(file_name: str) -> str:
+    return file_name.split(".")[1]
+
+
+def converter(file_name: str, format_file: str) -> str:
     """
 
+    :param format_file:
     :param file_name: str
     :return: str
     """
     file_path = f"{Path(__file__).parent.parent}/cache/{file_name}"
     name = file_name.split(".")
-    m4a_audio = AudioSegment.from_file(file_path, format="mp4")
+    audio = AudioSegment.from_file(file_path, format=check_file_format(file_name))
 
-    m4a_audio.export(
-        f"{Path(__file__).parent.parent}/cache/{name[0]}.mp3", format="mp3"
+    audio.export(
+        f"{Path(__file__).parent.parent}/cache/{name[0]}.{format_file}", format=format_file
     )
-    Path(file_path).unlink()
-    return f"{Path(__file__).parent.parent}/cache/{name[0]}.mp3"
+    return f"{Path(__file__).parent.parent}/cache/{name[0]}.{format_file}"
 
 
-def converter_wav(file_name: str) -> str:
+def translate_sr(file_name: str) -> str:
     """
 
     :param file_name: str
     :return: str
     """
-    file_path = f"{Path(__file__).parent.parent}/cache/{file_name}"
-    name = file_name.split(".")
-    m4a_audio = AudioSegment.from_file(file_path, format="mp4")
-    m4a_audio.export(
-        f"{Path(__file__).parent.parent}/cache/{name[0]}.wav", format="wav"
-    )
-    audio_file = f"{Path(__file__).parent.parent}/cache/{name[0]}.wav"
+    file_path = converter(file_name=file_name, format_file="wav")
+    # name = file_name.split(".")
+    # m4a_audio = AudioSegment.from_file(file_path, format="mp4")
+    # m4a_audio.export(
+    #     f"{Path(__file__).parent.parent}/cache/{name[0]}.wav", format="wav"
+    # )
+    audio_file = file_path
     r = sr.Recognizer()
     with sr.AudioFile(audio_file) as source:
         audio = r.record(source)
-    # Path(file_path).unlink()
     Path(audio_file).unlink()
     return r.recognize_google(audio, language="ru")
 
 
-def translate(file_name: str) -> str:
+def translate_vosk(file_name: str) -> str:
     """
     :param file_name: str
     :return: str
@@ -56,7 +57,7 @@ def translate(file_name: str) -> str:
         return "Please download the model from https://alphacephei.com/vosk/models " \
                "and unpack as 'model' in the current folder."
 
-    file_path = converter(file_name=file_name)
+    file_path = converter(file_name=file_name, format_file="mp3")
     frame_rate = 16000
     channels = 1
 
