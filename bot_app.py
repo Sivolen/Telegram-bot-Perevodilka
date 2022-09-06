@@ -37,6 +37,8 @@ async def echo(message: types.Message):
     :param message: Audio
     :return: None
     """
+    print(message)
+
     audio = await bot.get_file(message.audio.file_id)  # Get file path
     await handle_file(file=audio, file_name=f"{message.audio.file_name}")
 
@@ -44,7 +46,6 @@ async def echo(message: types.Message):
     await message.answer(f"Google {google_text}")
     vosk_text = translate_vosk(message.audio.file_name)
     await message.answer(f"Vosk {vosk_text}")
-
     # Delete source file
     Path(f"cache/{message.audio.file_name}").unlink()
 
@@ -54,13 +55,14 @@ async def echo(message: types.Message):
 
 @dp.message_handler(content_types=["voice"])
 async def echo(message: types.Message):
+    print(message)
     voice = await message.voice.get_file()
     await handle_file(file=voice, file_name=f"{voice.file_id}.ogg")
     google_text = translate_sr(f"{voice.file_id}.ogg")
     await message.answer(f"Google {google_text}")
     vosk_text = translate_vosk(f"{voice.file_id}.ogg")
     await message.answer(f"Vosk {vosk_text}")
-
+    print(message)
     # Delete source file
     Path(f"cache/{voice.file_id}.ogg").unlink()
 

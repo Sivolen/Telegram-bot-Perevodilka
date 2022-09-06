@@ -4,6 +4,7 @@ from pydub import AudioSegment
 import json
 import os
 from pathlib import Path
+from io import BytesIO
 import speech_recognition as sr
 
 
@@ -18,14 +19,18 @@ def converter(file_name: str, format_file: str) -> str:
     :param file_name: str
     :return: str
     """
-    file_path = f"{Path(__file__).parent.parent}/cache/{file_name}"
-    name = file_name.split(".")
-    audio = AudioSegment.from_file(file_path, format=check_file_format(file_name))
 
-    audio.export(
-        f"{Path(__file__).parent.parent}/cache/{name[0]}.{format_file}", format=format_file
-    )
-    return f"{Path(__file__).parent.parent}/cache/{name[0]}.{format_file}"
+    file_path = f"{Path(__file__).parent.parent}/cache/{file_name}"
+    file_path = Path(file_path)
+    if file_path.suffix == ".opus" or file_path.suffix == ".m4a" or file_path.suffix == ".ogg":
+        name = file_name.split(".")
+
+        audio = AudioSegment.from_file(file_path)
+
+        audio.export(
+            f"{Path(__file__).parent.parent}/cache/{name[0]}.{format_file}", format=format_file
+        )
+        return f"{Path(__file__).parent.parent}/cache/{name[0]}.{format_file}"
 
 
 def translate_sr(file_name: str) -> str:
@@ -110,4 +115,4 @@ def punctuation(text: str) -> str:
     return results
 
 
-# print(translate("AUDIO-2022-08-31-09-32-19.m4a"))
+# print(converter("PTT-20220906-WA0003.opus", format_file="mp3"))
