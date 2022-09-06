@@ -20,17 +20,18 @@ def converter(file_name: str, format_file: str) -> str:
     :return: str
     """
 
-    file_path = f"{Path(__file__).parent.parent}/cache/{file_name}"
-    file_path = Path(file_path)
+    file_path = Path(f"{Path(__file__).parent.parent}/cache/{file_name}")
+    # file_path = Path(file_path)
     if file_path.suffix == ".opus" or file_path.suffix == ".m4a" or file_path.suffix == ".ogg":
-        name = file_name.split(".")
+        # name = file_name.split(".")
+        name = file_path.stem
 
         audio = AudioSegment.from_file(file_path)
 
         audio.export(
-            f"{Path(__file__).parent.parent}/cache/{name[0]}.{format_file}", format=format_file
+            f"{Path(__file__).parent.parent}/cache/{name}.{format_file}", format=format_file
         )
-        return f"{Path(__file__).parent.parent}/cache/{name[0]}.{format_file}"
+        return f"{Path(__file__).parent.parent}/cache/{name}.{format_file}"
 
 
 def translate_sr(file_name: str) -> str:
@@ -115,4 +116,4 @@ def punctuation(text: str) -> str:
     return results
 
 
-# print(converter("PTT-20220906-WA0003.opus", format_file="mp3"))
+print(converter("PTT-20220906-WA0003.opus", format_file="mp3"))
