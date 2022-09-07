@@ -7,3 +7,7 @@ modules/ffprobe.exe
 ffmpeg.exe
 ffprobe.exe
 .env
+model.zip
+recasepunc.zip
+recasepunc
+
