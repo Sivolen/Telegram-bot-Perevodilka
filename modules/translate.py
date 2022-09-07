@@ -5,7 +5,7 @@ from pydub import AudioSegment
 import json
 from pathlib import Path
 import speech_recognition as sr
-from converter import converter
+from modules.converter import converter
 
 
 def translate_sr(file_name: str) -> str:
