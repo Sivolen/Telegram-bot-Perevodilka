@@ -66,9 +66,9 @@ async def echo(message: types.Message) -> None:
     voice = await message.voice.get_file()
     await handle_file(file=voice, file_name=f"{voice.file_id}.ogg")
     google_text = translate_sr(f"{voice.file_id}.ogg")
-    await message.reply(f"Google {google_text}")
+    await message.reply(f"Google: {google_text}")
     vosk_text = translate_vosk(f"{voice.file_id}.ogg")
-    await message.reply(f"Vosk {vosk_text}")
+    await message.reply(f"Vosk: {vosk_text}")
     print(message)
     # Delete source file
     Path(f"cache/{voice.file_id}.ogg").unlink()
