@@ -50,9 +50,9 @@ async def echo(message: types.Message) -> None:
     await handle_file(file=audio, file_name=f"{message.audio.file_name}")
 
     google_text = translate_sr(message.audio.file_name)
-    await message.reply(f"Google {google_text}")
+    await message.reply(f"Google: {google_text}")
     vosk_text = translate_vosk(message.audio.file_name)
-    await message.reply(f"Vosk {vosk_text}")
+    await message.reply(f"Vosk: {vosk_text}")
     # Delete source file
     Path(f"cache/{message.audio.file_name}").unlink()
 
