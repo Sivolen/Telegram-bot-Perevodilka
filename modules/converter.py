@@ -4,7 +4,7 @@ from pydub import AudioSegment
 
 def converter(file_name: str, format_file: str) -> str:
     """
-
+    This function converts the original audio file into the formats needed for translation.
     :param format_file:
     :param file_name: str
     :return: str
