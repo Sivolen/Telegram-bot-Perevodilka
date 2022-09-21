@@ -16,6 +16,10 @@ def converter(file_name: str, format_file: str) -> str:
         file_path.suffix == ".opus"
         or file_path.suffix == ".m4a"
         or file_path.suffix == ".ogg"
+        or file_path.suffix == ".mp3"
+        or file_path.suffix == ".wav"
+        or file_path.suffix == ".mp4"
+        or file_path.suffix == ".mkv"
     ):
         # name = file_name.split(".")
         name = file_path.stem
