@@ -13,7 +13,9 @@ def translate_sr(file_name: str) -> str:
     This feature converts audio to text using speech recognition using the free Google API.
     :return: str
     """
-    file_path = converter(file_name=file_name, format_file="wav")
+    file_path = Path(f"{Path(__file__).parent.parent}/cache/{file_name}")
+    if not file_path.suffix == ".wav":
+        file_path = converter(file_name=file_name, format_file="wav")
 
     audio_file = file_path
     r = sr.Recognizer()
@@ -35,8 +37,9 @@ def translate_vosk(file_name: str) -> str:
             "Please download the model from https://alphacephei.com/vosk/models "
             "and unpack as 'model' in the current folder."
         )
-
-    file_path = converter(file_name=file_name, format_file="mp3")
+    file_path = Path(f"{Path(__file__).parent.parent}/cache/{file_name}")
+    if not file_path.suffix == ".mp3":
+        file_path = converter(file_name=file_name, format_file="mp3")
     frame_rate = 16000
     channels = 1
 
